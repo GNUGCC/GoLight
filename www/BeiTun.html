@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="initial-scale=1, width=device-width" name="viewport">
+        <style>
+            * {
+                border: 0;
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            #main {
+                /* background-color:beige; */
+                background-image: url(004.png);
+                height: 100vh;
+                width: 100vw;
+            }
+            #lights {
+                overflow: hidden;
+                position: relative;
+                height: calc(100vh * 5 / 8);
+                width: 100vw;
+            }
+            .grids {
+                position: absolute;
+                height: calc(100vh * 5 / 8);
+                width: 100vw;
+            }
+            .grid {
+                margin: 0;
+                padding: 3px 0 0 0;
+                display: inline-block;
+                height: calc(100vh / 8);
+                width: calc(100vw / 7);
+            }
+            .grid img {
+                max-width: 100%;
+            }
+            .grid div { 
+                font-weight: bold;
+                text-align: center;
+            }
+            .video {
+                height: calc(100vh * 3 / 8);
+                width: 100vw;
+            }
+            video {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="main">
+            <div id="lights">
+                <div class="grids"><div class="grid" data-grid="1"><img/><div></div></div><div class="grid" data-grid="2"><img/><div></div></div><div class="grid" data-grid="3"><img/><div></div></div><div class="grid" data-grid="4"><img/><div></div></div><div class="grid" data-grid="5"><img/><div></div></div><div class="grid" data-grid="6"><img/><div></div></div><div class="grid" data-grid="7"><img/><div></div></div><div class="grid" data-grid="8"><img/><div></div></div><div class="grid" data-grid="9"><img/><div></div></div><div class="grid" data-grid="10"><img/><div></div></div><div class="grid" data-grid="11"><img/><div></div></div><div class="grid" data-grid="12"><img/><div></div></div><div class="grid" data-grid="13"><img/><div></div></div><div class="grid" data-grid="14"><img/><div></div></div><div class="grid" data-grid="15"><img/><div></div></div><div class="grid" data-grid="16"><img/><div></div></div><div class="grid" data-grid="17"><img/><div></div></div><div class="grid" data-grid="18"><img/><div></div></div><div class="grid" data-grid="19"><img/><div></div></div><div class="grid" data-grid="20"><img/><div></div></div><div class="grid" data-grid="21"><img/><div></div></div><div class="grid" data-grid="22"><img/><div></div></div><div class="grid" data-grid="23"><img/><div></div></div><div class="grid" data-grid="24"><img/><div></div></div><div class="grid" data-grid="25"><img/><div></div></div><div class="grid" data-grid="26"><img/><div></div></div><div class="grid" data-grid="27"><img/><div></div></div><div class="grid" data-grid="28"><img/><div></div></div><div class="grid" data-grid="29"><img/><div></div></div><div class="grid" data-grid="30"><img/><div></div></div><div class="grid" data-grid="31"><img/><div></div></div><div class="grid" data-grid="32"><img/><div></div></div><div class="grid" data-grid="33"><img/><div></div></div><div class="grid" data-grid="34"><img/><div></div></div><div class="grid" data-grid="35"><img/><div></div></div></div>
+                <div class="grids" style="left:100vw;"><div class="grid" data-grid="1"><img/><div></div></div><div class="grid" data-grid="2"><img/><div></div></div><div class="grid" data-grid="3"><img/><div></div></div><div class="grid" data-grid="4"><img/><div></div></div><div class="grid" data-grid="5"><img/><div></div></div><div class="grid" data-grid="6"><img/><div></div></div><div class="grid" data-grid="7"><img/><div></div></div><div class="grid" data-grid="8"><img/><div></div></div><div class="grid" data-grid="9"><img/><div></div></div><div class="grid" data-grid="10"><img/><div></div></div><div class="grid" data-grid="11"><img/><div></div></div><div class="grid" data-grid="12"><img/><div></div></div><div class="grid" data-grid="13"><img/><div></div></div><div class="grid" data-grid="14"><img/><div></div></div><div class="grid" data-grid="15"><img/><div></div></div><div class="grid" data-grid="16"><img/><div></div></div><div class="grid" data-grid="17"><img/><div></div></div><div class="grid" data-grid="18"><img/><div></div></div><div class="grid" data-grid="19"><img/><div></div></div><div class="grid" data-grid="20"><img/><div></div></div><div class="grid" data-grid="21"><img/><div></div></div><div class="grid" data-grid="22"><img/><div></div></div><div class="grid" data-grid="23"><img/><div></div></div><div class="grid" data-grid="24"><img/><div></div></div><div class="grid" data-grid="25"><img/><div></div></div><div class="grid" data-grid="26"><img/><div></div></div><div class="grid" data-grid="27"><img/><div></div></div><div class="grid" data-grid="28"><img/><div></div></div><div class="grid" data-grid="29"><img/><div></div></div><div class="grid" data-grid="30"><img/><div></div></div><div class="grid" data-grid="31"><img/><div></div></div><div class="grid" data-grid="32"><img/><div></div></div><div class="grid" data-grid="33"><img/><div></div></div><div class="grid" data-grid="34"><img/><div></div></div><div class="grid" data-grid="35"><img/><div></div></div></div>
+            </div>
+            <div class="video">
+                <video autoplay controls loop muted>
+                    <source src="video.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <script>
+            var width = main.offsetWidth;
+            var images = ["20220111/JUQwBK", "20220111/RI402S", "20220111/KfLcjJ", "20220111/11TG7E", "20220111/dlHb5S"];
+            var names = [];
+            var count = 0;
+
+            function marquee() {
+                if (width - lights.scrollLeft > 1) {
+                    lights.scrollLeft++;
+                } else {
+                    lights.scrollLeft = 0;
+                }
+            }
+
+            function load() {
+                $.getJSON("light").done(function (data) {
+                    var list = [];
+
+                    names.forEach(function (name) {
+                        var index = Math.floor(Math.random() * images.length);
+
+                        list.push({name, image: images[index]});
+                    });
+
+                    data.records.forEach(function (record, index) {
+                        list[index].name = record.name;
+                        list[index].image = record.image;
+                    });
+
+                    for (var i = list.length - 1; i > 0; i--) {
+                        var j = Math.floor(Math.random() * (i + 1));
+                        [list[i], list[j]] = [list[j], list[i]];
+                    }
+
+                    setTimeout(load, 5 * 60 * 1000);
+
+                    count++;
+
+                    replace(list);
+                });
+            }
+
+            function replace(list) {
+                var length = list.length;
+
+                if (length) {
+                    var item = list.pop();
+                    var container = $(`div[data-grid="${length}"]`);
+
+                    container.find("img").attr("src", "files/20220128/TcTe9w");
+                    container.find("div").text(item.name);
+
+                    setTimeout(function () {
+                        replace(list);
+                    }, count > 1 ? 1000 : 0);
+                }
+            }
+
+            setInterval(marquee, 100);
+
+            load();
+        </script>
+    </body>
+</html>

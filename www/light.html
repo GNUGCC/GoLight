@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="initial-scale=1, width=device-width" name="viewport">
+    <style>
+        * {
+            border: 0;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            /* background-color:beige; */
+            background-image: url(004.png);
+            height: 100vh;
+            width: 100vw;
+        }
+
+
+
+        .grids {
+            position: absolute;
+            height: calc(100vh * 5 / 8);
+            width: 100vw;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .grid {
+    margin: 0;
+    padding: 3px 10px 0 0; /* Increased right padding for more space */
+    display: inline-block;
+    height: calc(100vh / 8);
+    width: calc(100vw / 7);
+        }
+
+        .grid img {
+            max-width: 100%;
+        }
+
+        .grid div {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .video {
+            height: calc(100vh * 3 / 8);
+            width: 100vw;
+        }
+
+        video {
+            height: 100%;
+            width: 100%;
+        }
+
+        .qrcode {
+            margin: 0;
+            padding: 3px 3px 0 0;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="grid.css">
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            width: 800px;
+            height: 100vh;
+        }
+
+        .grid-item {
+            /*border: 1px solid #000;*/
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .grid-item img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .row-panel {
+            width: fit-content;
+            height: fit-content;
+        }
+        #lights {
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <img src="mothergod.png" alt="" style="width: auto;height: 50vh;position:fixed;left: 0;top: 0;z-index: 999;">
+    <div id="lights">
+        <div id="template" class="row-panel">
+            <div class="grid-container">
+                <div data-grid="1" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="2" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="3" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="4" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="5" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="6" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="7" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="8" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="9" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="10" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="11" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="12" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="13" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="14" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="15" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="16" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="17" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="18" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="19" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="20" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="21" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="22" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="23" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="24" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="25" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="26" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="27" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="28" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="29" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="30" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="31" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="32" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="33" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="34" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+                <div data-grid="35" class="grid-item">
+                    <div class="img"></div>
+                    <div class="name"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var lights = document.getElementById("lights");
+    var base = "https://light.go-free.tw";
+    var images = ["20220111/JUQwBK", "20220111/RI402S", "20220111/KfLcjJ", "20220111/11TG7E", "20220111/dlHb5S"];
+    var names = ["小狗", "奇奇", "米奇", "花生", "蛋黃", "奶昔", "巧克力", "麻糬", "小熊", "蘋果", "橘子", "可樂", "布丁", "鳳梨", "玫瑰", "冰淇淋", "小龍", "橙子", "藍莓", "雪碧", "蜜糖", "鴨梨", "哈密瓜", "蜜桃", "甜甜", "小鳥", "奶油", "芝麻", "小豬", "小雞", "蛋糕", "蓮蓮", "草莓", "可愛", "奶酪"];
+    var count = 0;
+    var numOfPanel = 100
+
+    function marquee() {
+        let maxOfScroll = lights.scrollWidth - lights.clientWidth;
+        if (lights.scrollLeft < maxOfScroll - 100) {
+            lights.scrollLeft++;
+        } else {
+            lights.scrollLeft = 0;
+        }
+    }
+
+    function load() {
+        $.getJSON(base + "/light").done(function (data) {
+            var list = [];
+
+            names.forEach(function (name) {
+                var index = Math.floor(Math.random() * images.length);
+
+                list.push({name, image: images[index]});
+            });
+
+            data.records.forEach(function (record, index) {
+                list[index].name = record.name;
+                if (record.pet_image) {
+                    list[index].image = record.pet_image;
+                } else {
+                    list[index].image = record.image;
+                }
+            });
+
+            for (var i = list.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                [list[i], list[j]] = [list[j], list[i]];
+            }
+
+            setTimeout(load, 5 * 60 * 1000);
+
+            count++;
+
+            replace(list);
+        });
+    }
+
+    function replace(list) {
+        var length = list.length;
+
+        if (length) {
+            var item = list.pop();
+            var container = $(`div[data-grid="${length}"]`);
+
+            var imgDiv = container.find("div.img")
+            imgDiv.css("background-image", `url("${base}/files/${item.image}")`);
+            imgDiv.css("background-repeat", "no-repeat");
+            imgDiv.css("background-position", "center");
+            imgDiv.css("background-size", "contain");
+            imgDiv.css("width", "100%");
+            imgDiv.css("height", "100%");
+
+            var nameDiv = container.find("div.name")
+            nameDiv.text(item.name);
+
+            setTimeout(function () {
+                replace(list);
+            }, count > 1 ? 1000 : 0);
+        }
+    }
+
+    let template = document.getElementById('template')
+    for(let i = 0; i < numOfPanel - 1; i++) {
+        let clone = template.cloneNode(true)
+        lights.appendChild(clone)
+    }
+
+    setInterval(marquee, 100);
+
+    load();
+</script>
+</body>
+</html>

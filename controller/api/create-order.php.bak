@@ -1,0 +1,186 @@
+<?php //>
+
+use Carbon\Carbon;
+use matrix\shopping\payment\Newebpay;
+
+return new class() extends matrix\web\MemberController {
+
+    use mazulight\Api, mazulight\SyncLightRecord;
+
+    protected function process($form) {
+        $method = model('PaymentMethod')->get(@$form['method']);
+
+        if (!$method) {
+            return ['error' => 'error.PaymentMethodNotFound'];
+        }
+
+        $items = [];
+        $list = @$form['items'];
+
+        if (is_array($list)) {
+            $member = $this->member();
+            $options = ['validation' => 'date', 'pattern' => cfg('system.date')];
+
+            foreach ($list as $row) {
+                if (@$row['checked']) {
+                    $item = [
+                        'name' => $member['name'],
+                        'calendar_type' => $member['calendar_type'],
+                        'birthday' => $member['birthday'],
+                        'phone' => $member['username'],
+                        'address' => $member['address'],
+                    ];
+                } else {
+                    $item = [
+                        'name' => @$row['name'],
+                        'calendar_type' => 1,
+                        'birthday' => @$row['birthday'],
+                        'phone' => @$row['phone'],
+                        'address' => @$row['address'],
+                    ];
+
+                    if (!strlen($item['name']) || !strlen($item['birthday']) || !strlen($item['phone']) || !strlen($item['address'])) {
+                        return ['error' => 'error.InvalidOrderItem'];
+                    }
+
+                    if (validate($item['birthday'], $options) !== true) {
+                        return ['error' => 'error.InvalidBirthday'];
+                    }
+                }
+
+                $item['light'] = model('Light')->get(@$row['light']['id']);
+
+                if (!$item['light']) {
+                    return ['error' => 'error.LightNotFound'];
+                }
+
+                $items[] = $item;
+            }
+        }
+
+        if (!$items) {
+            return ['error' => 'error.OrderItemNotFound'];
+        }
+
+        $temple = model('Temple')->get($items[0]['light']['temple_id']);
+
+        if (!$temple) {
+            return ['error' => 'error.TempleNotFound'];
+        }
+
+        $amount = 0;
+        $discount = 0;
+
+        foreach ($items as $item) {
+            $amount += $item['light']['price'];
+        }
+
+        $coupons = [];
+
+        foreach (model('Coupon')->query(['code' => @$form['coupons']]) as $coupon) {
+            if ($amount > $discount) {
+                if ($coupon['use_time']) {
+                    return ['error' => 'lang.coupon-used'];
+                }
+
+                if ($coupon['expire_date'] && Carbon::create($coupon['expire_date'])->lessThan(Carbon::today())) {
+                    return ['error' => 'lang.coupon-expired'];
+                }
+
+                $discount += $coupon['discount'];
+                $coupon['use_time'] = date(cfg('system.timestamp'));
+
+                $coupons[] = model('Coupon')->update($coupon);
+            }
+        }
+
+        if ($amount > $discount) {
+            $amount -= $discount;
+        } else {
+            $discount = $amount;
+            $amount = 0;
+        }
+
+        $order = model('Order')->insert([
+            'temple_id' => $temple['id'],
+            'member_id' => MEMBER_ID,
+            'net_amount' => $amount + $discount,
+            'discount' => $discount,
+            'amount' => $amount,
+            'payment_method_id' => $method['id'],
+            'snapshot' => json_encode(['p' => $method, 't' => $temple], JSON_UNESCAPED_UNICODE),
+        ]);
+
+        $orderItems = [];
+
+        foreach ($items as $item) {
+            $light = $item['light'];
+
+            $item['order_id'] = $order['id'];
+            $item['light_id'] = $light['id'];
+            $item['light_title'] = $light['title'];
+            $item['light_image'] = $light['image'];
+            $item['light_icon'] = $light['icon'];
+            $item['light_price'] = $light['price'];
+            $item['snapshot'] = json_encode(['l' => $light], JSON_UNESCAPED_UNICODE);
+
+            $orderItems[] = model('OrderItem')->insert($item);
+        }
+
+        foreach ($coupons as $coupon) {
+            model('OrderCoupon')->insert(['order_id' => $order['id'], 'coupon_id' => $coupon['id']]);
+        }
+
+        //--
+
+        if (!$order['amount']) {
+            $order['pay_time'] = date(cfg('system.timestamp'));
+            $order['status'] = 2;
+            model('Order')->update($order);
+
+            return $this->subprocess($form, ['success' => true, 'order' => $order]);
+        }
+
+        $order['payment_ver']++;
+
+        switch ($order['payment_method_id']) {
+        case 1: //信用卡
+            $order = Newebpay::applyCreditCard($order, $member);
+            break;
+        case 2: //銀行轉帳
+            $order = Newebpay::applyAtm($order, $member);
+            break;
+        case 3: //超商代碼繳費
+            $order = Newebpay::applyCvs($order, $member);
+            break;
+        default:
+            return ['error' => 'error.InvalidPaymentMethod']; //付款方式錯誤
+        }
+
+        if ($order === false) {
+            return ['error' => 'error.ConnectFailed']; //連線失敗
+        } else if ($order === null) {
+            return ['error' => 'error.PaymentFailed']; //串接失敗
+        }
+
+        model('Order')->update($order);
+
+        //--
+
+        $this->data($order);
+
+        $file = tempnam(create_folder(APP_DATA . 'order-payment'), date('Ymd-'));
+
+        file_put_contents($file, json_encode($order, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+        chmod($file, 0644);
+
+        return [
+            'success' => true,
+            'order_id' => $order['id'],
+            'url' => url(APP_ROOT . 'order-payment/' . basename($file)),
+            'return_url' => url(APP_ROOT . 'order/'),
+        ];
+    }
+
+};

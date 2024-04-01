@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寵物數位祈福燈</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #background {
+            position: absolute;
+            top: 0;
+            left: ;
+            width: 100%;
+            height: 100%;
+            background-image: url('./files/img/background1.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #button1 {
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            background-image: url('./files/img/light.png'); /* 设置按钮1的背景图片 */
+            background-size: cover; /* 或者其他你想要的背景大小 */
+            color: #000;
+            text-align: center;
+            line-height: 300px;
+            text-decoration: none;
+            border: none;
+            margin: 30px; /* 调整按钮之间的间距 */
+            font-size: 24px; /* 设置字体大小 */
+        }
+
+        #button2 {
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            background-image: url('./files/img/ios.png'); /* 设置按钮2的背景图片 */
+            background-size: cover; /* 或者其他你想要的背景大小 */
+            color: #000;
+            text-align: center;
+            line-height: 270px;
+            text-decoration: none;
+            border: none;
+            margin: 30px; /* 调整按钮之间的间距 */
+            font-size: 24px; /* 设置字体大小 */
+        }
+        
+        #button3 {
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            background-image: url('./files/img/ios.png'); /* 设置按钮2的背景图片 */
+            background-size: cover; /* 或者其他你想要的背景大小 */
+            color: #000;
+            text-align: center;
+            line-height: 270px;
+            text-decoration: none;
+            border: none;
+            margin: 30px; /* 调整按钮之间的间距 */
+            font-size: 20px; /* 设置字体大小 */
+        }
+ 
+        #button1, #button2, #button3 {
+            font-family: Arial, sans-serif; /* 设置按钮文本的字体 */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="background">
+        <a href="https://light.go-free.tw/light.html" id="button1"></a>
+        <a href="https://light.go-free.tw/golight.html" id="button2">iOS</a>
+        <a href="https://light.go-free.tw/pet-light.apk" id="button3">Android</a>
+    </div>
+</body>
+</html>
