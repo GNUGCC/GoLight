@@ -1,5 +1,5 @@
 <?php
-// ¸ê®Æ®w³s½u³]©w
+// è³‡æ–™åº«é€£ç·šè¨­å®š
 $host = "127.0.0.1";
 $port = "5432";
 $dbname = "mazulight_db";
@@ -11,19 +11,19 @@ require_once '/data/wwwroot/light/vendor/matrix-platform/core/class/matrix/web/m
 
 $loginController = new \matrix\web\member\Login();
 
-// ³s½u¨ì PostgreSQL ¸ê®Æ®w
+// é€£ç·šåˆ° PostgreSQL è³‡æ–™åº«
 $dbconn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password")
-    or die('µLªk³s½u¨ì¸ê®Æ®w: ' . pg_last_error());
+    or die('ç„¡æ³•é€£ç·šåˆ°è³‡æ–™åº«: ' . pg_last_error());
 $jsonData = file_get_contents('php://input');
 $data = json_decode($jsonData, true);
-$form = []; // ªì©l¤Æ $form °}¦C
+$form = []; // åˆå§‹åŒ– $form é™£åˆ—
 
-// §PÂ_¬O§_¬° LINE µn¤J
+// åˆ¤æ–·æ˜¯å¦ç‚º LINE ç™»å…¥
 if (isset($data['userId']) && isset($data['displayName'])) {
     $lineId = $data['userId'];
     $displayName = $data['displayName'];
 
-    // ÀË¬d LINE ID ¬O§_¤w¸g¦s¦b©ó¸ê®Æ®w¤¤
+    // æª¢æŸ¥ LINE ID æ˜¯å¦å·²ç¶“å­˜åœ¨æ–¼è³‡æ–™åº«ä¸­
     $checkQuery = "SELECT COUNT(*) FROM base_member WHERE lineid = $1";
     $checkResult = pg_query_params($dbconn, $checkQuery, array($lineId));
 
@@ -31,11 +31,11 @@ if (isset($data['userId']) && isset($data['displayName'])) {
         $row = pg_fetch_row($checkResult);
         $count = intval($row[0]);
         if ($count > 0) {
-            // LINE ID ¤w¦s¦b¡A³]¸m¹w³]ªí³æ°Ñ¼Æ¥Î©óµn¤J
+            // LINE ID å·²å­˜åœ¨ï¼Œè¨­ç½®é è¨­è¡¨å–®åƒæ•¸ç”¨æ–¼ç™»å…¥
             $form['username'] = $lineId;
-            $form['password'] = '8888888888'; // ¹w³]±K½X
+            $form['password'] = '8888888888'; // é è¨­å¯†ç¢¼
         } else {
-            // LINE ID ¤£¦s¦b¡A¼g¤J·s¥Î¤á¸ê®Æ
+            // LINE ID ä¸å­˜åœ¨ï¼Œå¯«å…¥æ–°ç”¨æˆ¶è³‡æ–™
             $id = '1000' . mt_rand(3000, 9999);
             $gender = 1;
             $calendar_type = 1;
@@ -43,16 +43,16 @@ if (isset($data['userId']) && isset($data['displayName'])) {
             $disabled = 'f';
             $username = $lineId;
             $password = md5($id . '::' . '8888888888');
-            $address  = "¥xÆW";
+            $address  = "å°ç£";
 
             $insertQuery = "INSERT INTO base_member (id, username, password, name, gender, calendar_type, birthday, address, disabled, lineid) 
                             VALUES ('$id', '$username', '$password', '$displayName', $gender, $calendar_type, '$birthday', '$address', '$disabled', '$lineId')";
             $insertResult = pg_query($dbconn, $insertQuery);
             var_dump($insertResult);
             if ($insertResult) {
-                // ·s¥Î¤á¸ê®Æ¼g¤J¦¨¥\¡A³]¸m¹w³]ªí³æ°Ñ¼Æ¥Î©óµn¤J
+                // æ–°ç”¨æˆ¶è³‡æ–™å¯«å…¥æˆåŠŸï¼Œè¨­ç½®é è¨­è¡¨å–®åƒæ•¸ç”¨æ–¼ç™»å…¥
               $form['username'] = 098;
-              $form['password'] = '8888888888'; // ¹w³]±K½X
+              $form['password'] = '8888888888'; // é è¨­å¯†ç¢¼
             }
         }
     }
@@ -79,6 +79,6 @@ return new class() extends matrix\web\member\Login {
     } 
 };
 
-// Ãö³¬¸ê®Æ®w³s½u
+// é—œé–‰è³‡æ–™åº«é€£ç·š
 pg_close($dbconn);
 ?>
