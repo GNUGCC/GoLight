@@ -138,69 +138,78 @@
         <script src="/js/chunk-vendors.15388d47.js"></script>
         <script src="/js/app.963142ac.js"></script>
         <!-- 新增按鈕點擊事件處理 -->
-    <script>
-        document.getElementById('homeButton').addEventListener('click', function() {
-            window.location.href = 'https://light.go-free.tw/golight.html';
-        });
-  
-
-        liff.init({
-            liffId: "2004258463-5P6lPeYA"
-            
-        }).then(() => {
-        
-            document.getElementById('lineLoginButton').addEventListener('click', function() {
-            
-                if (!liff.isLoggedIn()) {
-                
-                    liff.login();
-                } else {
-                
-                    liff.getProfile().then(profile => {
-                    
-                        const userId = profile.userId;
-                        
-                        const displayName = profile.displayName;
-                        
-                        // 發送請求到 login.php
-                        
-                        fetch('/api/login', {
-                        
-                            method: 'POST',
-                            
-                            headers: {
-                            
-                                'Content-Type': 'application/json'
-                                
-                            },
-                            
-                            body: JSON.stringify({ lineId: userId, displayName: displayName })
-                            
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json(); // 这里会抛出错误如果响应不是有效的 JSON
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                // 登入成功，處理後續邏輯
-                            } else {
-                                // 登入失敗，顯示錯誤信息
-                            }
+        <script>
+            document.getElementById('homeButton').addEventListener('click', function() {
+                window.location.href = 'https://light.go-free.tw/golight.html';
+            });      
+    
+            liff.init({
+                liffId: "2004258463-5P6lPeYA"
+            }).then(() => {
+                document.getElementById('lineLoginButton').addEventListener('click', function() {
+                    console.log('使用者登入');
+                    if (!liff.isLoggedIn()) {
+                        console.log('使用者未登入');
+                        liff.login();
+                    } else {
+                        liff.getProfile().then(profile => {
+                            console.log('使用者: ', profile);
+                            const userId = profile.userId;
+                            const displayName = profile.displayName;
+                            fetch('/api/lineee', {
+                                method: 'POST',
+                                headers: {   
+                                    'Content-Type': 'application/json' 
+                                },
+                                body: JSON.stringify({ lineId: userId, displayName: displayName })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    fetch('/api/login', {
+                                        method: 'POST',
+                                        headers: {   
+                                            'Content-Type': 'application/json' 
+                                        },
+                                        body: JSON.stringify({ username: data.username, password: data.password })
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {                                            
+                                            const token = data.token;                                         
+                                            fetch('/api/light-record-list', {
+                                                method: 'POST',
+                                                headers: {   
+                                                    'Content-Type': 'application/json' 
+                                                },
+                                                body: JSON.stringify({})
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    const data = localStorage.getItem("data");
+                                                    const json = JSON.parse(data);
+                                                    json.token = token;
+                                                    localStorage.setItem('data', JSON.stringify(json));
+                                                    window.location = 'https://light.go-free.tw/golight.html';
+                                                } else {
+                                                    alert('登入失敗，請稍後再試');
+                                                }
+                                            });
+                                        } else {
+                                            alert('登入失敗，請稍後再試');
+                                        }
+                                    });
+                                }
+                                else {
+                                    
+                                }
+                            });
                         });
-                    });
-                }
+                    }
+                });
             });
-        });
-
-    </script>
-
-
-
-
-
-
+        </script> 
+        
 </body>
 </html>
