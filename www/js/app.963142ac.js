@@ -1,4 +1,4 @@
-(function(e) {
+(function(e) {    
     function n(n) {
         for (var t, a, r = n[0], d = n[1], i = n[2], f = 0, h = []; f < r.length; f++) a = r[f], Object.prototype.hasOwnProperty.call(u, a) && u[a] && h.push(u[a][0]), u[a] = 0;
         for (t in d) Object.prototype.hasOwnProperty.call(d, t) && (e[t] = d[t]);
@@ -592,6 +592,7 @@
             path: "/verify-register-form/:token",
             component: () => c.e("chunk-46dc6002").then(c.bind(null, "3047"))
         }];
+
         var g = Object(m["b"])({
                 history: Object(m["a"])("/"),
                 routes: y
@@ -638,9 +639,11 @@
                             items: [],
                             token: null
                         };
+
                     return e ? Object.assign(n, JSON.parse(e)) : n
                 }
-            });
+            });            
+
         c("4b63"), c("4041"), c("51ef"), c("a237"), c("e09e"), c("46e5"), c("98b6"), c("2d22"), c("66b0"), c("ce1f"), c("8c28"), c("3ac8"), c("dee1");
         const v = Object(a["d"])(b).use(t["IonicVue"]).use(g).use(j);
         g.beforeEach(e => !(!j.state.token && e.matched.some(e => e.meta.requiresAuth)) || {
@@ -822,9 +825,9 @@
             s("/api/forgot-sms", e, n)
         }
 
-        function g(e, n) {
-            s("/api/login", e, n)
-        }
+        function g (e, n) {
+            s("/api/login", e, n);
+        };
 
         function j(e) {
             s("/api/logout", {}, e)

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>寵物數位祈福燈BBB</title>
+    <title>寵物數位祈福燈</title>
     <style>
         body {
             margin: 0;
@@ -46,28 +46,80 @@
             font-family: Arial, sans-serif; /* 设置按钮文本的字体 */
             font-weight: bold;
         }
+        header {
+            width: 100%;
+            text-align: center;
+            font-size: 48px; /* 调整字体大小以适应屏幕 */
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            position: absolute;
+            top: 10%; /* 增加顶部距离 */
+            z-index: 10;
+            color: #ffd700; /* 可根据背景调整颜色 */
+            text-shadow: 2px 2px 4px #000000;
+            padding: 0 20px; /* 为了防止标题宽度过宽 */
+            box-sizing: border-box;
+        }
 
+        /* 底部标志样式调整 */
+        footer {
+            text-align: right; /* 将文本对齐到右边 */
+            position: absolute;
+            right: 250px; /* 使用具体的像素值进行定位 */
+            bottom: 10px; /* 使用具体的像素值进行定位 */
+            font-size: 30px; /* 如有需要，可调整字体大小 */
+            color: #ffd700; /* 文本颜色 */
+            font-family: Arial, sans-serif;
+            z-index: 10;
+            text-shadow: 1px 1px 2px #000;
+        }
+                /* 媒体查询，针对较小屏幕的设备进行样式调整 */
+                @media (max-width: 768px) {
+            header {
+                font-size: 24px; /* 在小屏幕上减小字体大小 */
+                top: 5%; /* 减少顶部距离 */
+            }
 
+            /* 标题分为两行 */
+            header:before {
+                content: "日日好";
+                display: block;
+            }
+
+            header:after {
+                content: "寵物祈福燈";
+                display: block;
+            }
+
+            footer {
+                font-size: 16px; /* 在小屏幕上减小字体大小 */
+                bottom: 2%; /* 减少底部距离 */
+            }
+        }
 
         #button1 {
-            background-image: url('./files/img/light.png');
+            background-image: url('./files/img/訪客.png');
         }
 
         #button2 {
-            background-image: url('./files/img/ios.png');
+            background-image: url('./files/img/會員.png');
         }
 
         #button3 {
-            background-image: url('./files/img/ios.png');
+            background-image: url('./files/img/關於.png');
         }
 
         #button4 {
-            background-image: url('./files/img/ios.png');
+            background-image: url('./files/img/優惠.png');
         }
     </style>
 </head>
 
 <body>
+    <header></header>
+    <footer>
+        艾沛國際
+    </footer>
     <div class="button-grid">
         <!-- 按钮1 -->
         <a href="https://light.go-free.tw/light.html" class="button" id="button1">
@@ -76,17 +128,17 @@
 
         <!-- 按钮2 -->
         <a href="https://light.go-free.tw/golight.html" class="button" id="button2">
-            <span class="button-text">iOS專用</span> <!-- 按钮文本 -->
+            <span class="button-text"></span> <!-- 按钮文本 -->
         </a>
 
         <!-- 按钮3 -->
-        <a href="https://light.go-free.tw/pet-light.apk" class="button" id="button3">
-            <span class="button-text">Android</span> <!-- 按钮文本 -->
+        <a href="https://light.go-free.tw/aboutus.html" class="button" id="button3">
+            <span class="button-text">  </span> <!-- 按钮文本 -->
         </a>
 
         <!-- 按钮4 -->
         <a href="https://light.go-free.tw/fangantest.html" class="button" id="button4">
-            <span class="button-text">方案套餐</span> <!-- 按钮文本 -->
+            <span class="button-text"></span> <!-- 按钮文本 -->
         </a>
     </div>
 </body>

@@ -187,17 +187,12 @@
                         RemoteImg: r["a"]
                     },
                    computed: {
-                          token() {
-                              const token = this.$store.state.token;
-                              console.log('Token:', token);
-                              return token;
-                          },
-                          isLoggedIn() {
-                              // 檢查 Vuex store 中的 token 是否存在
-                              const isLoggedIn = !!this.$store.state.token;
-                              console.log('Is user logged in:', isLoggedIn);
-                              return isLoggedIn;
-                          }
+                        token() {
+                            return this.$store.state.token;
+                        },
+                        isLoggedIn() {
+                            return !!localStorage.getItem('token');
+                        }
                     },
                     data() {
                         return {
@@ -216,21 +211,9 @@
                             }) : this.records = []
                         }
                     },
-                  mounted() {
-                       const unwatch = this.$watch(
-                        () => this.token,
-                        (token) => {
-                            if (token) {
-                                // 當 token 被設置後，執行您的邏輯
-                                console.log('Token:', token);
-                                // 可以在這裡做一些需要 token 的事情
-                                // 例如發送請求或者執行其他操作
-                                // 記得在不再需要時解除監聽
-                                unwatch();
-                            }
-                        }
-                    );
-                  },
+                    mounted() {
+                        this.query()
+                    },
                     watch: {
                         $route(e) {
                             "Home" === e.name && this.query()

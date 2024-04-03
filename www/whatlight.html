@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>寵物數位祈福燈</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('./files/img/background1.jpg');
+            background-size: contain; /* 修改为contain */
+            background-repeat: no-repeat; /* 避免平铺 */
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 30px;
+        }
+
+        .button {
+            position: relative; /* 相对定位 */
+            width: 150px;
+            height: 150px;
+            background-size: contain;
+            cursor: pointer;
+            text-align: left; /* 文字居中 */
+            text-decoration: none; /* 去除超链接样式 */
+        }
+
+        .button-text {
+            position: absolute; /* 绝对定位 */
+            bottom: 3px; /* 距离底部 10px */
+            left: 30px; /* 文字左对齐 */
+            right: 0; /* 文字右对齐，向左移动 5px */
+            width: auto; /* 自动调整宽度 */
+            color: #000; /* 文字颜色 */
+            font-size: 24px; /* 设置字体大小 */
+            font-family: Arial, sans-serif; /* 设置按钮文本的字体 */
+            font-weight: bold;
+        }
+        header {
+            width: 100%;
+            text-align: center;
+            font-size: 48px; /* 调整字体大小以适应屏幕 */
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            position: absolute;
+            top: 10%; /* 增加顶部距离 */
+            z-index: 10;
+            color: #ffd700; /* 可根据背景调整颜色 */
+            text-shadow: 2px 2px 4px #000000;
+            padding: 0 20px; /* 为了防止标题宽度过宽 */
+            box-sizing: border-box;
+        }
+
+        /* 底部标志样式调整 */
+        footer {
+            text-align: right; /* 将文本对齐到右边 */
+            position: absolute;
+            right: 250px; /* 使用具体的像素值进行定位 */
+            bottom: 10px; /* 使用具体的像素值进行定位 */
+            font-size: 30px; /* 如有需要，可调整字体大小 */
+            color: #ffd700; /* 文本颜色 */
+            font-family: Arial, sans-serif;
+            z-index: 10;
+            text-shadow: 1px 1px 2px #000;
+        }
+                /* 媒体查询，针对较小屏幕的设备进行样式调整 */
+                @media (max-width: 768px) {
+            header {
+                font-size: 24px; /* 在小屏幕上减小字体大小 */
+                top: 5%; /* 减少顶部距离 */
+            }
+
+            /* 标题分为两行 */
+            header:before {
+                content: "日日好";
+                display: block;
+            }
+
+            header:after {
+                content: "寵物祈福燈";
+                display: block;
+            }
+
+            footer {
+                font-size: 16px; /* 在小屏幕上减小字体大小 */
+                bottom: 2%; /* 减少底部距离 */
+            }
+        }
+
+        #button1 {
+            background-image: url('./files/img/首頁2.png');
+        }
+
+        #button2 {
+            background-image: url('./files/img/光明.png');
+        }
+
+        #button3 {
+            background-image: url('./files/img/太歲.png');
+        }
+
+        #button4 {
+            background-image: url('./files/img/藥師.png');
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <footer>
+        艾沛國際
+    </footer>
+    <div class="button-grid">
+        <a href="https://light.go-free.tw/user2.html" class="button" id="button1">
+            <span class="button-text"></span>
+        </a>
+        <div class="button" id="button2" data-toggle="modal" data-target="#light1">
+            <span class="button-text">光明燈</span>
+        </div>
+        <div class="button" id="button3" data-toggle="modal" data-target="#light2">
+            <span class="button-text">太歲燈</span>
+        </div>
+        <div class="button" id="button4" data-toggle="modal" data-target="#light3">
+                <span class="button-text">藥師燈</span>
+        </div>
+    
+    </div>
+    <div class="modal fade" id="light1" tabindex="-1" role="dialog" aria-labelledby="light1Label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lightModalLabel">光明燈介紹</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    光明燈往往承載著對光明、智慧、神聖和愛的意義，而其具體含義可能受到宗教、文化和個人信仰的影響。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="light2" tabindex="-1" role="dialog" aria-labelledby="light2Label aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lightModalLabel">太歲燈介紹</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    「太歲燈」通常是指在中國文化中與農曆生肖的「太歲」相關的燈飾。太歲是一種中國民間信仰中的神祇，被認為是主管一年之中的厄運、事業興衰的神祇。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="light3" tabindex="-1" role="dialog" aria-labelledby="light3Label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lightModalLabel">藥師燈介紹</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    通常與佛教文化相關，特別是在寺廟或佛教活動中。這種燈飾通常用於供奉藥師琉璃光佛，也稱為藥師佛，是佛教六大天王之一，擁有濟世救苦的能力。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

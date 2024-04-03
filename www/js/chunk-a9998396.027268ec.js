@@ -4,12 +4,12 @@
             "use strict";
             o.r(e);
             var n = o("7a23");
-            const c = Object(n["i"])("會員111登入"),
+            const c = Object(n["i"])("會員222登入"),
                 b = Object(n["i"])("　　電話　　"),
                 j = Object(n["i"])("　　密碼　　"),
                 l = Object(n["i"])("忘記密碼"),
-                u = Object(n["i"])("登入123");
-123
+                u = Object(n["i"])("登入");
+
             function a(t, e, o, a, i, O) {
                 const d = Object(n["B"])("ion-back-button"),
                     s = Object(n["B"])("ion-buttons"),
@@ -170,4 +170,4 @@
         d1b4: function(t, e, o) {}
     }
 ]);
-//# sourceMappingURL=chunk-a9998396.027268ec.js.map
+//# sourceMappingURL=chunk-a9998396.eb1451cb.js.map

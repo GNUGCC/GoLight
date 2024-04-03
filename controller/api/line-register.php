@@ -1,78 +1,53 @@
 <?php
-// 資料庫連線設定
+// 连接数据库
 $host = "127.0.0.1";
 $port = "5432";
 $dbname = "mazulight_db";
 $user = "postgres";
 $password = "postgres";
-
-// 連線到 PostgreSQL 資料庫
 $dbconn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password")
-    or die('無法連線到資料庫: ' . pg_last_error());
+    or die('无法连接到数据库: ' . pg_last_error());
 
-// 接收來自前端的 JSON 數據
-$data = json_decode(file_get_contents('php://input'), true);
+// 获取请求数据
+$lineId = $_GET['lineId'];
 
-// 獲取用戶的 LINE ID 和顯示名稱
-$lineId = $data['userId'];
-$displayName = $data['displayName'];
+// 检查LINE ID是否存在
+$query = "SELECT * FROM base_member WHERE lineid = $1";
+$result = pg_query_params($dbconn, $query, array($lineId));
 
-// 要寫入的資料
-$id = '1000' . mt_rand(3000, 9999);
-$gender = 1;
-$calendar_type = 1;
-$birthday = '2024-03-26';
-$disabled = 'f';
-$username = '';
-$password = md5($id . '::' . '8888888888');
-$address  = "台灣";
-
-// 準備 SQL 查詢
-$checkQuery = "SELECT COUNT(*) FROM base_member WHERE lineid = $1";
-$checkResult = pg_query_params($checkQuery, array($lineId));
-
-if ($checkResult) {
-    $row = pg_fetch_row($checkResult);
-    $count = intval($row[0]);
-    if ($count > 0) {
-        $response = [
-            'success' => true,
-            'message' => 'User data received successfully',
-            'lineId' => $lineId,
-            'displayName' => $displayName
-        ];
+if ($result) {
+    $row = pg_fetch_assoc($result);
+    if ($row) {
+        // LINE ID已存在，返回用户名和默认密码
+        $username = $row['username'];
+        $password = '88888888';
+        echo json_encode(['username' => $username, 'password' => $password]);
     } else {
-        // 插入資料
-        $query = "INSERT INTO base_member (id, username, password, name, gender, calendar_type, birthday, address, disabled, lineid) 
-                  VALUES ('$id', '$lineId', '$password', '$displayName', $gender, $calendar_type, '$birthday', '$address', '$disabled', '$lineId')";
+        // LINE ID不存在，插入新用户数据
+        $id = '1000' . mt_rand(3000, 9999);
+        $gender = 1;
+        $calendar_type = 1;
+        $birthday = date('Y-m-d');
+        $disabled = 'f';
+        $username = $id;
+        $password = md5($id . '::' . '88888888');
+        $address = "台灣";
 
-        $result = pg_query($dbconn, $query);
-
-        if ($result) {
-            $response = [
-                'success' => true,
-                'message' => 'Data inserted successfully',
-                'lineId' => $lineId,
-                'displayName' => $displayName
-            ];
+        $insert_query = "INSERT INTO base_member (id, username, password, lineid, gender, calendar_type, birthday, disabled, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+        $insert_result = pg_query_params($dbconn, $insert_query, array($id, $username, $password, $lineId, $gender, $calendar_type, $birthday, $disabled, $address));
+        if ($insert_result) {
+            // 返回新用户的ID和密码
+            echo json_encode(['id' => $id, 'password' => '88888888']);
         } else {
-            $response = [
-                'success' => false,
-                'message' => 'Data insertion failed',
-            ];
+            // 插入失败
+            echo json_encode(['error' => '插入失败']);
         }
     }
 } else {
-    $response = [
-        'success' => false,
-        'message' => 'Failed to query lineid',
-    ];
+    // 查询失败
+    echo json_encode(['error' => '查询失败']);
 }
 
-// 返回 JSON 數據給前端
-header('Content-Type: application/json');
-echo json_encode($response);
-
-// 關閉資料庫連線
+// 关闭数据库连接
 pg_close($dbconn);
 ?>

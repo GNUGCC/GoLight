@@ -128,87 +128,21 @@
     <link href="/js/chunk-vendors.15388d47.js" rel="preload" as="script">
     <link href="/css/chunk-vendors.93511a51.css" rel="stylesheet">
     <link href="/css/app.86e2e8cf.css" rel="stylesheet">
-    <script src="https://static.line-scdn.net/liff/edge/versions/2.18.0/sdk.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>
     </head>
     <body style="max-width: 600px">
         <div id="app"></div>
         <!-- 新增回首頁按鈕 -->
-<button id="homeButton" style="position: fixed; top: 15px; right: 20px; z-index: 10000; background-color: #FFCD00; color: #000; border: none; padding: 8px 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 14px; font-weight: bold;">首頁</button>
+<button id="homeButton" style="position: fixed; top: 10px; right: 20px; z-index: 10000; background-color: #FFCD00; color: #000; border: none; padding: 8px 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 14px; font-weight: bold;">首頁</button>
 <button id="lineLoginButton" style="position: fixed; top: 50px; right: 20px; z-index: 10000; background-color: #00c300; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 14px; font-weight: bold;">LINE 登录</button>
         <script src="/js/chunk-vendors.15388d47.js"></script>
         <script src="/js/app.963142ac.js"></script>
+        <script src="/js/golight.js"></script>
         <!-- 新增按鈕點擊事件處理 -->
         <script>
             document.getElementById('homeButton').addEventListener('click', function() {
                 window.location.href = 'https://light.go-free.tw/golight.html';
-            });      
-    
-            liff.init({
-                liffId: "2004258463-5P6lPeYA"
-            }).then(() => {
-                document.getElementById('lineLoginButton').addEventListener('click', function() {
-                    console.log('使用者登入');
-                    if (!liff.isLoggedIn()) {
-                        console.log('使用者未登入');
-                        liff.login();
-                    } else {
-                        liff.getProfile().then(profile => {
-                            console.log('使用者: ', profile);
-                            const userId = profile.userId;
-                            const displayName = profile.displayName;
-                            fetch('/api/lineee', {
-                                method: 'POST',
-                                headers: {   
-                                    'Content-Type': 'application/json' 
-                                },
-                                body: JSON.stringify({ lineId: userId, displayName: displayName })
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    fetch('/api/login', {
-                                        method: 'POST',
-                                        headers: {   
-                                            'Content-Type': 'application/json' 
-                                        },
-                                        body: JSON.stringify({ username: data.username, password: data.password })
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.success) {                                            
-                                            const token = data.token;                                         
-                                            fetch('/api/light-record-list', {
-                                                method: 'POST',
-                                                headers: {   
-                                                    'Content-Type': 'application/json' 
-                                                },
-                                                body: JSON.stringify({})
-                                            })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.success) {
-                                                    const data = localStorage.getItem("data");
-                                                    const json = JSON.parse(data);
-                                                    json.token = token;
-                                                    localStorage.setItem('data', JSON.stringify(json));
-                                                    window.location = 'https://light.go-free.tw/golight.html';
-                                                } else {
-                                                    alert('登入失敗，請稍後再試');
-                                                }
-                                            });
-                                        } else {
-                                            alert('登入失敗，請稍後再試');
-                                        }
-                                    });
-                                }
-                                else {
-                                    
-                                }
-                            });
-                        });
-                    }
-                });
-            });
+            });                
         </script> 
         
 </body>
