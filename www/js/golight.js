@@ -43,7 +43,11 @@ function getProfile() {
  */
 function linee(body) {
     return fetchToJson('/api/lineee', 'post', body)
-        .then(data => login({ username: data.username, line: true }));
+        .then(data => {
+            if (data.success) {
+                login({ username: data.username, line: true });
+            }
+        });
 }
 
 /**
@@ -54,8 +58,10 @@ function linee(body) {
 function login(body) {
     return fetchToJson('/api/login', 'post', body)
         .then(data => {
-            storageMember(data);
-            window.location = 'https://light.go-free.tw/golight.html';
+            if (data.success) {
+                storageMember(data);
+                window.location = 'https://light.go-free.tw/golight.html';
+            }
         });
 }
 
