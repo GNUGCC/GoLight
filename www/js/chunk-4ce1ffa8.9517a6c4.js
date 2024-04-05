@@ -359,8 +359,7 @@
                                                 location: "no",
                                                 usewkwebview: "yes"
                                             });
-
-                                            window.location = e.url;
+                                            
                                             o.on("exit").subscribe(() => {
                                                 t || this.$router.push({
                                                     name: "Order",
@@ -382,7 +381,9 @@
                                                         }
                                                     })
                                                 }))
-                                            })
+                                            });
+
+                                            window.location = e.url;
                                         })
                                     }
                                 } else alert("請選擇付款方式");
