@@ -776,7 +776,7 @@
                         alert(e.status)
                 }
             })).catch((function() {
-                alert("網路連線失敗")
+                console.log("網路連線失敗");
             })), k.then((function() {
                 d = !1, b.dismiss()
             }))

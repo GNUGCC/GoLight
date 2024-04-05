@@ -338,9 +338,9 @@
                         submit() {
                             if (this.$store.state.items.length)
                                 if ("" !== this.method) {
-                                    if (confirm("確定要送出訂單嗎？")) {
+                                    if (confirm("確定要送出訂單嗎？")) {                                        
                                         let e = [];
-                                        this.$store.state.coupons.forEach(t => {
+                                        this.$store.state.coupons.forEach(t => {                                            
                                             t.checked && e.push(t.code)
                                         }), Object(h["createOrder"])({
                                             items: JSON.parse(JSON.stringify(this.$store.state.items)),
@@ -353,12 +353,14 @@
                                                     id: e.order.id
                                                 }
                                             });
-                                            let t, o = I["a"].create(e.url, "_blank", {
+                                            let t, o = I["a"].create(e.url, '_blank', {
                                                 hardwareback: "no",
                                                 hidenavigationbuttons: "yes",
                                                 location: "no",
                                                 usewkwebview: "yes"
                                             });
+
+                                            window.location = e.url;
                                             o.on("exit").subscribe(() => {
                                                 t || this.$router.push({
                                                     name: "Order",
